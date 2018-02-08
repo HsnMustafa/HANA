@@ -1,0 +1,867 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="CV_HR_FINAL" applyPrivilegeType="ANALYTIC_PRIVILEGE" dataCategory="DIMENSION" schemaVersion="2.3" defaultClient="crossClient" visibility="internal" outputViewType="Aggregation" calculationScenarioType="TREE_BASED" enforceSqlExecution="false">
+<descriptions defaultDescription="CV_HR_FINAL"/>
+<localVariables>
+  <variable id="VAR_DateRange">
+    <descriptions defaultDescription="VAR_DateRange"/>
+    <variableProperties datatype="NVARCHAR" length="8" mandatory="false">
+      <valueDomain type="AttributeValue">
+        <attribute name="StartDate"/>
+      </valueDomain>
+      <selection multiLine="false" type="Range"/>
+      <defaultRange operator="EQ" including="true"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="CV_HR_Prev" type="CALCULATION_VIEW">
+    <viewAttributes allViewAttributes="true"/>
+    <resourceUri>/Z_FMG.HR.TRAINING/calculationviews/CV_HR_Prev</resourceUri>
+  </DataSource>
+  <DataSource id="CV_HR" type="CALCULATION_VIEW">
+    <viewAttributes allViewAttributes="true"/>
+    <resourceUri>/Z_FMG.HR.TRAINING/calculationviews/CV_HR</resourceUri>
+  </DataSource>
+  <DataSource id="PA0002" type="DATA_BASE_TABLE">
+    <viewAttributes allViewAttributes="true"/>
+    <columnObject schemaName="SAP_ECC" columnObjectName="PA0002"/>
+  </DataSource>
+  <DataSource id="PA0077" type="DATA_BASE_TABLE">
+    <viewAttributes allViewAttributes="true"/>
+    <columnObject schemaName="SAP_ECC" columnObjectName="PA0077"/>
+  </DataSource>
+  <DataSource id="T505S" type="DATA_BASE_TABLE">
+    <viewAttributes allViewAttributes="true"/>
+    <columnObject schemaName="SAP_ECC" columnObjectName="T505S"/>
+  </DataSource>
+  <DataSource id="PA0006" type="DATA_BASE_TABLE">
+    <viewAttributes allViewAttributes="true"/>
+    <columnObject schemaName="SAP_ECC" columnObjectName="PA0006"/>
+  </DataSource>
+  <DataSource id="LFA1" type="DATA_BASE_TABLE">
+    <viewAttributes allViewAttributes="true"/>
+    <columnObject schemaName="SAP_ECC" columnObjectName="LFA1"/>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="PERNR"/>
+      <viewAttribute id="PLANS_PREV"/>
+      <viewAttribute id="PLANS"/>
+      <viewAttribute id="BEGDA"/>
+    
+      <viewAttribute id="CC_STEXT_PREV"/>
+    
+      <viewAttribute id="CC_STEXT_1"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_PLANS" datatype="NVARCHAR" length="8" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(&quot;PLANS&quot;= '99999999', &quot;PLANS_PREV&quot;, &quot;PLANS&quot;)</formula>
+      </calculatedViewAttribute>
+    
+      <calculatedViewAttribute id="CC_STEXT" datatype="NVARCHAR" length="40" expressionLanguage="COLUMN_ENGINE">
+    
+        <formula>if(&quot;PLANS&quot;= '99999999', &quot;CC_STEXT_PREV&quot;, &quot;CC_STEXT_1&quot;)</formula>
+    
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="#CV_HR_Prev">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANS_PREV" source="PLANS_PREV"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANS" source="PLANS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA" source="BEGDA"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_STEXT_PREV" source="CC_STEXT_PREV"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_STEXT_1" source="CC_STEXT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="BEGDA"/>
+      <viewAttribute id="BEGDA_1"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="ENDDA"/>
+      <viewAttribute id="ENDDA_1"/>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="MASSG"/>
+      <viewAttribute id="MASSN"/>
+      <viewAttribute id="ORGEH"/>
+      <viewAttribute id="PERNR"/>
+      <viewAttribute id="PERNR_1" aggregationType="sum"/>
+      <viewAttribute id="PERSG"/>
+      <viewAttribute id="PERSK"/>
+      <viewAttribute id="PLANS"/>
+      <viewAttribute id="STAT2"/>
+      <viewAttribute id="WERKS"/>
+    
+      <viewAttribute id="BEGDA_2"/>
+      <viewAttribute id="BEGDA_3"/>
+      <viewAttribute id="BTEXT"/>
+      <viewAttribute id="BTRTL"/>
+      <viewAttribute id="CC_STEXT"/>
+      <viewAttribute id="ENDDA_2"/>
+      <viewAttribute id="ENDDA_3"/>
+      <viewAttribute id="NAME1"/>
+      <viewAttribute id="PTEXT"/>
+      <viewAttribute id="PTEXT_1"/>
+      <viewAttribute id="STEXT_1"/>
+    
+      <viewAttribute id="MGTXT"/>
+    
+      <viewAttribute id="ENAME"/>
+      <viewAttribute id="MNTXT"/>
+      <viewAttribute id="TEXT1"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="#CV_HR">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA" source="BEGDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_1" source="BEGDA_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA" source="ENDDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_1" source="ENDDA_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASSG" source="MASSG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASSN" source="MASSN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORGEH" source="ORGEH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR_1" source="PERNR_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSG" source="PERSG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSK" source="PERSK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PLANS" source="PLANS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAT2" source="STAT2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WERKS" source="WERKS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_2" source="BEGDA_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_3" source="BEGDA_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTEXT" source="BTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTRTL" source="BTRTL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_STEXT" source="CC_STEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_2" source="ENDDA_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_3" source="ENDDA_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME1" source="NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PTEXT" source="PTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PTEXT_1" source="PTEXT_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STEXT_1" source="STEXT_1"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MGTXT" source="MGTXT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENAME" source="ENAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MNTXT" source="MNTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEXT1" source="TEXT1"/>
+    </input>
+    <filter> </filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="BEGDA"/>
+      <viewAttribute id="BEGDA_1"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="ENDDA"/>
+      <viewAttribute id="ENDDA_1"/>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="MASSG"/>
+      <viewAttribute id="MASSN"/>
+      <viewAttribute id="ORGEH"/>
+      <viewAttribute id="PERNR"/>
+      <viewAttribute id="PERNR_1"/>
+      <viewAttribute id="PERSG"/>
+      <viewAttribute id="PERSK"/>
+      <viewAttribute id="STAT2"/>
+      <viewAttribute id="WERKS"/>
+      <viewAttribute id="CC_PLANS"/>
+    
+      <viewAttribute id="BEGDA_2"/>
+      <viewAttribute id="BEGDA_3"/>
+      <viewAttribute id="BTEXT"/>
+      <viewAttribute id="BTRTL"/>
+      <viewAttribute id="ENDDA_2"/>
+      <viewAttribute id="ENDDA_3"/>
+      <viewAttribute id="NAME1"/>
+      <viewAttribute id="PTEXT"/>
+      <viewAttribute id="PTEXT_1"/>
+      <viewAttribute id="STEXT_1"/>
+    
+      <viewAttribute id="CC_STEXT"/>
+    
+      <viewAttribute id="MGTXT"/>
+    
+      <viewAttribute id="ENAME"/>
+      <viewAttribute id="MNTXT"/>
+      <viewAttribute id="TEXT1"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="#Projection_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA" source="BEGDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_1" source="BEGDA_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA" source="ENDDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_1" source="ENDDA_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASSG" source="MASSG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASSN" source="MASSN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORGEH" source="ORGEH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR_1" source="PERNR_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSG" source="PERSG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSK" source="PERSK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAT2" source="STAT2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WERKS" source="WERKS"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_2" source="BEGDA_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_3" source="BEGDA_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTEXT" source="BTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTRTL" source="BTRTL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_2" source="ENDDA_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_3" source="ENDDA_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME1" source="NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PTEXT" source="PTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PTEXT_1" source="PTEXT_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STEXT_1" source="STEXT_1"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MGTXT" source="MGTXT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENAME" source="ENAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MNTXT" source="MNTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEXT1" source="TEXT1"/>
+    </input>
+    <input node="#Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_PLANS" source="CC_PLANS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_STEXT" source="CC_STEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA" source="BEGDA"/>
+    </input>
+    <joinAttribute name="PERNR"/>
+    <joinAttribute name="BEGDA"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_3">
+    <viewAttributes>
+      <viewAttribute id="BEGDA"/>
+      <viewAttribute id="PERNR"/>
+      <viewAttribute id="GESCH"/>
+      <viewAttribute id="GBDAT"/>
+      <viewAttribute id="ENDDA"/>
+    
+      <viewAttribute id="MANDT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="#PA0002">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA" source="BEGDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GESCH" source="GESCH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GBDAT" source="GBDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA" source="ENDDA"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="BEGDA"/>
+      <viewAttribute id="BEGDA_1"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="ENDDA"/>
+      <viewAttribute id="ENDDA_1"/>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="MASSG"/>
+      <viewAttribute id="MASSN"/>
+      <viewAttribute id="ORGEH"/>
+      <viewAttribute id="PERNR"/>
+      <viewAttribute id="PERNR_1"/>
+      <viewAttribute id="PERSG"/>
+      <viewAttribute id="PERSK"/>
+      <viewAttribute id="STAT2"/>
+      <viewAttribute id="WERKS"/>
+      <viewAttribute id="CC_PLANS"/>
+      <viewAttribute id="BEGDA_2"/>
+      <viewAttribute id="BEGDA_3"/>
+      <viewAttribute id="BTEXT"/>
+      <viewAttribute id="BTRTL"/>
+      <viewAttribute id="ENDDA_2"/>
+      <viewAttribute id="ENDDA_3"/>
+      <viewAttribute id="NAME1"/>
+      <viewAttribute id="PTEXT"/>
+      <viewAttribute id="PTEXT_1"/>
+      <viewAttribute id="STEXT_1"/>
+      <viewAttribute id="CC_STEXT"/>
+      <viewAttribute id="MGTXT"/>
+      <viewAttribute id="GESCH"/>
+      <viewAttribute id="GBDAT"/>
+    
+      <viewAttribute id="ENAME"/>
+      <viewAttribute id="MNTXT"/>
+      <viewAttribute id="TEXT1"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="#Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA" source="BEGDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_1" source="BEGDA_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA" source="ENDDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_1" source="ENDDA_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASSG" source="MASSG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASSN" source="MASSN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORGEH" source="ORGEH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR_1" source="PERNR_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSG" source="PERSG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSK" source="PERSK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAT2" source="STAT2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WERKS" source="WERKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_PLANS" source="CC_PLANS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_2" source="BEGDA_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_3" source="BEGDA_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTEXT" source="BTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTRTL" source="BTRTL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_2" source="ENDDA_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_3" source="ENDDA_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME1" source="NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PTEXT" source="PTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PTEXT_1" source="PTEXT_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STEXT_1" source="STEXT_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_STEXT" source="CC_STEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MGTXT" source="MGTXT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENAME" source="ENAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MNTXT" source="MNTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEXT1" source="TEXT1"/>
+    </input>
+    <input node="#Projection_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="GESCH" source="GESCH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GBDAT" source="GBDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+    </input>
+    <joinAttribute name="PERNR"/>
+    <joinAttribute name="MANDT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_4">
+    <viewAttributes>
+      <viewAttribute id="RACKY"/>
+      <viewAttribute id="PERNR"/>
+    
+      <viewAttribute id="MANDT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="#PA0077">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RACKY" source="RACKY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_3" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PERNR"/>
+      <viewAttribute id="RACKY"/>
+      <viewAttribute id="LTEXT"/>
+    
+      <viewAttribute id="MANDT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="#Projection_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RACKY" source="RACKY"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+    </input>
+    <input node="#Projection_5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LTEXT" source="LTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RACKY" source="RACKY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+    </input>
+    <joinAttribute name="RACKY"/>
+    <joinAttribute name="MANDT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_5" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="LTEXT"/>
+      <viewAttribute id="RACKY"/>
+    
+      <viewAttribute id="MANDT"/>
+    
+      <viewAttribute id="MOLGA"/>
+      <viewAttribute id="SPRSL"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="#T505S">
+      <mapping xsi:type="Calculation:AttributeMapping" target="LTEXT" source="LTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RACKY" source="RACKY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MOLGA" source="MOLGA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SPRSL" source="SPRSL"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+    </input>
+    <filter>&quot;SPRSL&quot;='E'
+and
+&quot;MOLGA&quot;=13</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_4" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="BEGDA"/>
+      <viewAttribute id="BEGDA_1"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="ENDDA"/>
+      <viewAttribute id="ENDDA_1"/>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="MASSG"/>
+      <viewAttribute id="MASSN"/>
+      <viewAttribute id="ORGEH"/>
+      <viewAttribute id="PERNR"/>
+      <viewAttribute id="PERNR_1"/>
+      <viewAttribute id="PERSG"/>
+      <viewAttribute id="PERSK"/>
+      <viewAttribute id="STAT2"/>
+      <viewAttribute id="WERKS"/>
+      <viewAttribute id="CC_PLANS"/>
+      <viewAttribute id="BEGDA_2"/>
+      <viewAttribute id="BEGDA_3"/>
+      <viewAttribute id="BTEXT"/>
+      <viewAttribute id="BTRTL"/>
+      <viewAttribute id="ENDDA_2"/>
+      <viewAttribute id="ENDDA_3"/>
+      <viewAttribute id="NAME1"/>
+      <viewAttribute id="PTEXT"/>
+      <viewAttribute id="PTEXT_1"/>
+      <viewAttribute id="STEXT_1"/>
+      <viewAttribute id="CC_STEXT"/>
+      <viewAttribute id="MGTXT"/>
+      <viewAttribute id="GESCH"/>
+      <viewAttribute id="GBDAT"/>
+      <viewAttribute id="RACKY"/>
+      <viewAttribute id="LTEXT"/>
+    
+      <viewAttribute id="ENAME"/>
+      <viewAttribute id="MNTXT"/>
+      <viewAttribute id="TEXT1"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_Year" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>int(leftstr(&quot;ENDDA&quot;,4))</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_Month" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>int(midstr(&quot;ENDDA&quot;,5,2))</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="#Join_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA" source="BEGDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_1" source="BEGDA_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA" source="ENDDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_1" source="ENDDA_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASSG" source="MASSG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASSN" source="MASSN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORGEH" source="ORGEH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR_1" source="PERNR_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSG" source="PERSG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSK" source="PERSK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAT2" source="STAT2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WERKS" source="WERKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_PLANS" source="CC_PLANS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_2" source="BEGDA_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_3" source="BEGDA_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTEXT" source="BTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTRTL" source="BTRTL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_2" source="ENDDA_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_3" source="ENDDA_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME1" source="NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PTEXT" source="PTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PTEXT_1" source="PTEXT_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STEXT_1" source="STEXT_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_STEXT" source="CC_STEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MGTXT" source="MGTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GESCH" source="GESCH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GBDAT" source="GBDAT"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENAME" source="ENAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MNTXT" source="MNTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEXT1" source="TEXT1"/>
+    </input>
+    <input node="#Join_3">
+      <mapping xsi:type="Calculation:AttributeMapping" target="RACKY" source="RACKY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LTEXT" source="LTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+    </input>
+    <joinAttribute name="PERNR"/>
+    <joinAttribute name="MANDT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_5" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="PERNR"/>
+      <viewAttribute id="ZZVENDOR"/>
+      <viewAttribute id="SUBTY"/>
+      <viewAttribute id="NAME1"/>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="BEGDA"/>
+      <viewAttribute id="ENDDA"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="#PA0006">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZVENDOR" source="ZZVENDOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBTY" source="SUBTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA" source="BEGDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA" source="ENDDA"/>
+    </input>
+    <input node="#LFA1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME1" source="NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZVENDOR" source="LIFNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+    </input>
+    <joinAttribute name="ZZVENDOR"/>
+    <joinAttribute name="MANDT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_6" filterExpressionLanguage="COLUMN_ENGINE">
+    <viewAttributes>
+      <viewAttribute id="PERNR"/>
+      <viewAttribute id="ZZVENDOR"/>
+      <viewAttribute id="SUBTY"/>
+      <viewAttribute id="NAME1"/>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="BEGDA"/>
+      <viewAttribute id="ENDDA"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="CC_Year_06" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>int(leftstr(&quot;ENDDA&quot;,4))</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="CC_Month_06" datatype="INTEGER" expressionLanguage="COLUMN_ENGINE">
+        <formula>int(midstr(&quot;ENDDA&quot;,5,2))</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="#Join_5">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZVENDOR" source="ZZVENDOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SUBTY" source="SUBTY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME1" source="NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA" source="BEGDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA" source="ENDDA"/>
+    </input>
+    <filter>&quot;SUBTY&quot;=90</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_6" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="BEGDA"/>
+      <viewAttribute id="BEGDA_1"/>
+      <viewAttribute id="BUKRS"/>
+      <viewAttribute id="ENDDA"/>
+      <viewAttribute id="ENDDA_1"/>
+      <viewAttribute id="MANDT"/>
+      <viewAttribute id="MASSG"/>
+      <viewAttribute id="MASSN"/>
+      <viewAttribute id="ORGEH"/>
+      <viewAttribute id="PERNR"/>
+      <viewAttribute id="PERNR_1"/>
+      <viewAttribute id="PERSG"/>
+      <viewAttribute id="PERSK"/>
+      <viewAttribute id="STAT2"/>
+      <viewAttribute id="WERKS"/>
+      <viewAttribute id="CC_PLANS"/>
+      <viewAttribute id="BEGDA_2"/>
+      <viewAttribute id="BEGDA_3"/>
+      <viewAttribute id="BTEXT"/>
+      <viewAttribute id="BTRTL"/>
+      <viewAttribute id="ENDDA_2"/>
+      <viewAttribute id="ENDDA_3"/>
+      <viewAttribute id="NAME1"/>
+      <viewAttribute id="PTEXT"/>
+      <viewAttribute id="PTEXT_1"/>
+      <viewAttribute id="STEXT_1"/>
+      <viewAttribute id="CC_STEXT"/>
+      <viewAttribute id="MGTXT"/>
+      <viewAttribute id="GESCH"/>
+      <viewAttribute id="GBDAT"/>
+      <viewAttribute id="RACKY"/>
+      <viewAttribute id="LTEXT"/>
+      <viewAttribute id="ZZVENDOR"/>
+      <viewAttribute id="NAME1_1"/>
+      <viewAttribute id="ENAME"/>
+      <viewAttribute id="MNTXT"/>
+      <viewAttribute id="TEXT1"/>
+      <viewAttribute id="JOIN$CC_Year$CC_Year_06" hidden="true"/>
+      <viewAttribute id="JOIN$CC_Month$CC_Month_06" hidden="true"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="#Join_4">
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA" source="BEGDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_1" source="BEGDA_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BUKRS" source="BUKRS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA" source="ENDDA"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_1" source="ENDDA_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASSG" source="MASSG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MASSN" source="MASSN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ORGEH" source="ORGEH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR_1" source="PERNR_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSG" source="PERSG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERSK" source="PERSK"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STAT2" source="STAT2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="WERKS" source="WERKS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_PLANS" source="CC_PLANS"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_2" source="BEGDA_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BEGDA_3" source="BEGDA_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTEXT" source="BTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BTRTL" source="BTRTL"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_2" source="ENDDA_2"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENDDA_3" source="ENDDA_3"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME1" source="NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PTEXT" source="PTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PTEXT_1" source="PTEXT_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="STEXT_1" source="STEXT_1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CC_STEXT" source="CC_STEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MGTXT" source="MGTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GESCH" source="GESCH"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="GBDAT" source="GBDAT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="RACKY" source="RACKY"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LTEXT" source="LTEXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ENAME" source="ENAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MNTXT" source="MNTXT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TEXT1" source="TEXT1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_Year$CC_Year_06" source="CC_Year"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_Month$CC_Month_06" source="CC_Month"/>
+    </input>
+    <input node="#Projection_6">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ZZVENDOR" source="ZZVENDOR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="NAME1_1" source="NAME1"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="PERNR" source="PERNR"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="MANDT" source="MANDT"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_Year$CC_Year_06" source="CC_Year_06"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CC_Month$CC_Month_06" source="CC_Month_06"/>
+    </input>
+    <joinAttribute name="PERNR"/>
+    <joinAttribute name="MANDT"/>
+    <joinAttribute name="JOIN$CC_Year$CC_Year_06"/>
+    <joinAttribute name="JOIN$CC_Month$CC_Month_06"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_6">
+  <attributes>
+    <attribute id="PersonnelNumber" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Personnel number1 "/>
+      <keyMapping columnObjectName="Join_6" columnName="PERNR"/>
+    </attribute>
+    <attribute id="StartDate" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Start Date"/>
+      <localVariable>#VAR_DateRange</localVariable>
+      <keyMapping columnObjectName="Join_6" columnName="BEGDA"/>
+    </attribute>
+    <attribute id="BEGDA_1" hidden="true" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BEGDA_1"/>
+      <keyMapping columnObjectName="Join_6" columnName="BEGDA_1"/>
+    </attribute>
+    <attribute id="BUKRS" order="5" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
+      <descriptions defaultDescription="BUKRS"/>
+      <keyMapping columnObjectName="Join_6" columnName="BUKRS"/>
+    </attribute>
+    <attribute id="EndDate" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="End Date"/>
+      <keyMapping columnObjectName="Join_6" columnName="ENDDA"/>
+    </attribute>
+    <attribute id="ENDDA_1" hidden="true" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENDDA_1"/>
+      <keyMapping columnObjectName="Join_6" columnName="ENDDA_1"/>
+    </attribute>
+    <attribute id="MANDT" order="8" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
+      <descriptions defaultDescription="MANDT"/>
+      <keyMapping columnObjectName="Join_6" columnName="MANDT"/>
+    </attribute>
+    <attribute id="ReasonForAction" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Reason for Action"/>
+      <keyMapping columnObjectName="Join_6" columnName="MASSG"/>
+    </attribute>
+    <attribute id="ActionType" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Action Type"/>
+      <keyMapping columnObjectName="Join_6" columnName="MASSN"/>
+    </attribute>
+    <attribute id="OrganizationalUnit" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Organizational Unit (OU)"/>
+      <keyMapping columnObjectName="Join_6" columnName="ORGEH"/>
+    </attribute>
+    <attribute id="PERNR_1" hidden="true" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PERNR_1"/>
+      <keyMapping columnObjectName="Join_6" columnName="PERNR_1"/>
+    </attribute>
+    <attribute id="EmployeeGroup" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee Group (EG)"/>
+      <keyMapping columnObjectName="Join_6" columnName="PERSG"/>
+    </attribute>
+    <attribute id="EmployeeSubgroup" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee Subgroup (ESG)"/>
+      <keyMapping columnObjectName="Join_6" columnName="PERSK"/>
+    </attribute>
+    <attribute id="EmpStatusCode" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Emp Status Code"/>
+      <keyMapping columnObjectName="Join_6" columnName="STAT2"/>
+    </attribute>
+    <attribute id="PersonnelArea" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Personnel Area (PA)"/>
+      <keyMapping columnObjectName="Join_6" columnName="WERKS"/>
+    </attribute>
+    <attribute id="Position" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Position"/>
+      <keyMapping columnObjectName="Join_6" columnName="CC_PLANS"/>
+    </attribute>
+    <attribute id="BEGDA_2" hidden="true" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BEGDA_2"/>
+      <keyMapping columnObjectName="Join_6" columnName="BEGDA_2"/>
+    </attribute>
+    <attribute id="BEGDA_3" hidden="true" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BEGDA_3"/>
+      <keyMapping columnObjectName="Join_6" columnName="BEGDA_3"/>
+    </attribute>
+    <attribute id="PSADescrpition" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PSA Descrpition"/>
+      <keyMapping columnObjectName="Join_6" columnName="BTEXT"/>
+    </attribute>
+    <attribute id="PersonnelSubarea" order="21" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Personnel Subarea (PSA)"/>
+      <keyMapping columnObjectName="Join_6" columnName="BTRTL"/>
+    </attribute>
+    <attribute id="ENDDA_2" hidden="true" order="22" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENDDA_2"/>
+      <keyMapping columnObjectName="Join_6" columnName="ENDDA_2"/>
+    </attribute>
+    <attribute id="ENDDA_3" hidden="true" order="23" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ENDDA_3"/>
+      <keyMapping columnObjectName="Join_6" columnName="ENDDA_3"/>
+    </attribute>
+    <attribute id="PADescrpition" order="24" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PA Descrpition"/>
+      <keyMapping columnObjectName="Join_6" columnName="NAME1"/>
+    </attribute>
+    <attribute id="EGDescrpition" order="25" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EG Descrpition"/>
+      <keyMapping columnObjectName="Join_6" columnName="PTEXT"/>
+    </attribute>
+    <attribute id="ESGDescrpition" order="26" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ESG Descrpition"/>
+      <keyMapping columnObjectName="Join_6" columnName="PTEXT_1"/>
+    </attribute>
+    <attribute id="OUDescription" order="27" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OU Description"/>
+      <keyMapping columnObjectName="Join_6" columnName="STEXT_1"/>
+    </attribute>
+    <attribute id="PositionDescription" order="28" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Position Description"/>
+      <keyMapping columnObjectName="Join_6" columnName="CC_STEXT"/>
+    </attribute>
+    <attribute id="ReasonDescription" order="29" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Reason Description"/>
+      <keyMapping columnObjectName="Join_6" columnName="MGTXT"/>
+    </attribute>
+    <attribute id="GenderKey" order="30" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Gender Key"/>
+      <keyMapping columnObjectName="Join_6" columnName="GESCH"/>
+    </attribute>
+    <attribute id="DateOfBirth" order="31" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Date of Birth"/>
+      <keyMapping columnObjectName="Join_6" columnName="GBDAT"/>
+    </attribute>
+    <attribute id="EthnicOrigin" order="32" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Ethnic origin (EO)"/>
+      <keyMapping columnObjectName="Join_6" columnName="RACKY"/>
+    </attribute>
+    <attribute id="EOExplanation" order="33" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EO Explanation"/>
+      <keyMapping columnObjectName="Join_6" columnName="LTEXT"/>
+    </attribute>
+    <attribute id="VendorAccountNumber" order="34" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Vendor Account Number"/>
+      <keyMapping columnObjectName="Join_6" columnName="ZZVENDOR"/>
+    </attribute>
+    <attribute id="VendorName" order="35" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Vendor Name"/>
+      <keyMapping columnObjectName="Join_6" columnName="NAME1_1"/>
+    </attribute>
+  
+    <attribute id="EmployeeName" order="36" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employee Name"/>
+      <keyMapping columnObjectName="Join_6" columnName="ENAME"/>
+    </attribute>
+    <attribute id="ActionTypeDescription" order="37" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Action Type Description"/>
+      <keyMapping columnObjectName="Join_6" columnName="MNTXT"/>
+    </attribute>
+    <attribute id="EmploymentStatus" order="38" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Employment Status"/>
+      <keyMapping columnObjectName="Join_6" columnName="TEXT1"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes>
+    <calculatedAttribute id="AgeofEmployee" order="3" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false" hidden="false">
+      <descriptions defaultDescription="Age of Employee"/>
+      <keyCalculation datatype="DECIMAL" length="2" scale="2" expressionLanguage="COLUMN_ENGINE">
+        <formula>daysbetween(date(&quot;DateOfBirth&quot;),now())/365</formula>
+      </keyCalculation>
+    </calculatedAttribute>
+  </calculatedAttributes>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="48" y="368"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="301" y="381"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="136" y="245"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="451" y="252"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="426" y="144"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="526" y="183"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="506" y="106"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="723" y="196"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_4" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="497" y="17"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Join_5" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="204" y="221"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="197" y="125"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_6" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="245" y="22"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>   
