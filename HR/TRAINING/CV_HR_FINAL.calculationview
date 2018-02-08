@@ -645,7 +645,7 @@ and
 <logicalModel id="Join_6">
   <attributes>
     <attribute id="PersonnelNumber" order="1" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Personnel number1 "/>
+      <descriptions defaultDescription="Personnel number "/>
       <keyMapping columnObjectName="Join_6" columnName="PERNR"/>
     </attribute>
     <attribute id="StartDate" order="2" displayAttribute="false" attributeHierarchyActive="false">
@@ -864,4 +864,4 @@ and
     </shape>
   </shapes>
 </layout>
-</Calculation:scenario>   
+</Calculation:scenario>
